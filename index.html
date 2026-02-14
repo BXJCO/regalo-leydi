@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para Leydi ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Cormorant+Garamond:wght@300;400;600&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #ff6b9d;
+            --secondary-color: #ffa8c5;
+            --text-dark: #4a2c3e;
+            --text-light: #8b6b7a;
+            --gold: #d4af37;
+        }
+
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            background: linear-gradient(135deg, #fff5f8 0%, #ffe8f0 50%, #ffd6e7 100%);
+            color: var(--text-dark);
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Animated background hearts */
+        .heart-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .floating-heart {
+            position: absolute;
+            font-size: 20px;
+            color: rgba(255, 107, 157, 0.2);
+            animation: float 15s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% {
+                transform: translateY(-10vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Screen container */
+        .screen {
+            display: none;
+            min-height: 70vh;
+            max-width: 900px;
+            margin: 40px auto;
+            animation: fadeIn 0.8s ease-in-out;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(15px);
+            padding: 60px 50px;
+            border-radius: 30px;
+            box-shadow: 0 30px 80px rgba(255, 107, 157, 0.3);
+            position: relative;
+            z-index: 1;
+        }
+
+        .screen.active {
+            display: block;
+        }
+
+        .screen::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 107, 157, 0.1) 0%, transparent 70%);
+            animation: pulse 8s ease-in-out infinite;
+            z-index: -1;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 0.5;
+            }
+            50% {
+                transform: scale(1.1);
+                opacity: 0.8;
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Typography */
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 4em;
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: 700;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3em;
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .subtitle {
+            font-size: 1.6em;
+            text-align: center;
+            color: var(--text-light);
+            margin-bottom: 40px;
+            font-weight: 300;
+        }
+
+        .question-number {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.5em;
+            color: var(--text-light);
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .question-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.3em;
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 50px;
+            line-height: 1.4;
+            font-weight: 600;
+        }
+
+        /* Icons */
+        .heart-icon, .question-icon {
+            font-size: 5em;
+            text-align: center;
+            margin: 30px 0;
+            animation: heartbeat 1.5s ease-in-out infinite;
+            display: block;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            25% { transform: scale(1.15); }
+            50% { transform: scale(1); }
+            75% { transform: scale(1.08); }
+        }
+
+        /* Buttons */
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            max-width: 600px;
+            margin: 50px auto 0;
+        }
+
+        .option-btn {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            padding: 25px 40px;
+            font-size: 1.4em;
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px rgba(255, 107, 157, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .option-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .option-btn:hover::before {
+            width: 400px;
+            height: 400px;
+        }
+
+        .option-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(255, 107, 157, 0.4);
+        }
+
+        .option-btn:active {
+            transform: translateY(-2px);
+        }
+
+        .start-btn {
+            background: linear-gradient(135deg, var(--gold), #f4d03f);
+            color: var(--text-dark);
+            font-size: 1.6em;
+            padding: 25px 70px;
+            margin: 40px auto;
+            display: block;
+            width: fit-content;
+        }
+
+        /* Letter Ending */
+        .letter-container {
+            background: #ffffff;
+            padding: 60px 50px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+            border: 4px solid var(--secondary-color);
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .letter-container::before,
+        .letter-container::after {
+            content: '❤️';
+            position: absolute;
+            font-size: 2.5em;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .letter-container::before {
+            top: 20px;
+            left: 20px;
+        }
+
+        .letter-container::after {
+            bottom: 20px;
+            right: 20px;
+        }
+
+        .top-hearts {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1.8em;
+            display: flex;
+            gap: 15px;
+        }
+
+        .top-hearts span {
+            animation: bounce 1s ease-in-out infinite;
+        }
+
+        .top-hearts span:nth-child(2) { animation-delay: 0.2s; }
+        .top-hearts span:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .bottom-hearts {
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1.8em;
+            display: flex;
+            gap: 15px;
+        }
+
+        .letter-header {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3em;
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .letter-date {
+            text-align: center;
+            font-size: 1.2em;
+            color: var(--text-light);
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+
+        .letter-content {
+            font-size: 1.3em;
+            line-height: 1.9;
+            color: var(--text-dark);
+            text-align: justify;
+            margin-bottom: 40px;
+        }
+
+        .letter-content p {
+            margin-bottom: 20px;
+        }
+
+        .letter-signature {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.2em;
+            text-align: right;
+            color: var(--primary-color);
+            margin-top: 40px;
+        }
+
+        .letter-ps {
+            font-size: 1.1em;
+            font-style: italic;
+            color: var(--text-light);
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px dashed var(--secondary-color);
+        }
+
+        /* Album Ending */
+        .album-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .album-title h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3.5em;
+            margin-bottom: 15px;
+        }
+
+        .album-title p {
+            font-size: 1.4em;
+            color: var(--text-light);
+            font-style: italic;
+        }
+
+        .album-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 40px;
+            padding: 20px;
+        }
+
+        .photo-frame {
+            position: relative;
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+            transition: all 0.4s ease;
+        }
+
+        .photo-frame:nth-child(odd) {
+            transform: rotate(-2deg);
+        }
+
+        .photo-frame:nth-child(even) {
+            transform: rotate(2deg);
+        }
+
+        .photo-frame:hover {
+            transform: rotate(0deg) scale(1.05);
+            box-shadow: 0 20px 50px rgba(255, 107, 157, 0.3);
+            z-index: 10;
+        }
+
+        .photo-frame::before,
+        .photo-frame::after {
+            content: '❤️';
+            position: absolute;
+            font-size: 1.5em;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .photo-frame::before {
+            top: 8px;
+            left: 8px;
+        }
+
+        .photo-frame::after {
+            bottom: 8px;
+            right: 8px;
+        }
+
+        .photo-placeholder {
+            width: 100%;
+            height: 280px;
+            background: linear-gradient(135deg, #ffd6e7 0%, #ffb3d1 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3em;
+            color: white;
+            margin-bottom: 15px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .photo-placeholder::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent,
+                rgba(255, 255, 255, 0.3),
+                transparent
+            );
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% {
+                transform: translateX(-100%) translateY(-100%) rotate(45deg);
+            }
+            100% {
+                transform: translateX(100%) translateY(100%) rotate(45deg);
+            }
+        }
+
+        .photo-caption {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.6em;
+            color: var(--primary-color);
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .decoration-hearts {
+            position: absolute;
+            pointer-events: none;
+            font-size: 1.3em;
+        }
+
+        .decoration-hearts.top-left {
+            top: -12px;
+            left: -12px;
+        }
+
+        .decoration-hearts.top-right {
+            top: -12px;
+            right: -12px;
+        }
+
+        .decoration-hearts.bottom-left {
+            bottom: -12px;
+            left: -12px;
+        }
+
+        .decoration-hearts.bottom-right {
+            bottom: -12px;
+            right: -12px;
+        }
+
+        #img1{
+            height: 90%;
+            width: 60%;
+        }
+        #img2{
+            height: 90%;
+            width: 60%;
+        }
+        #img3{
+            height: 90%;
+            width: 60%;
+        }
+        #img4{
+            height: 95%;
+            width: 90%;
+        }#img5{
+            height: 95%;
+            width: 90%;
+        }
+        #img6{
+            height: 95%;
+            width: 90%;
+        }
+
+        .final-message {
+            text-align: center;
+            margin-top: 60px;
+            padding: 40px 30px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(255, 107, 157, 0.2);
+        }
+
+        .final-message h2 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        .final-message p {
+            font-size: 1.4em;
+            line-height: 1.8;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5em;
+            }
+
+            h2, .question-text {
+                font-size: 2em;
+            }
+
+            .screen {
+                padding: 40px 30px;
+            }
+
+            .letter-container {
+                padding: 40px 30px;
+            }
+
+            .album-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Music Player */
+        .music-player {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1000;
+        }
+
+        .music-btn {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 8px 25px rgba(255, 107, 157, 0.4);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .music-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(255, 107, 157, 0.5);
+        }
+
+        .music-btn:active {
+            transform: translateY(-1px);
+        }
+
+        .music-btn.playing {
+            animation: musicPulse 1s ease-in-out infinite;
+        }
+
+        @keyframes musicPulse {
+            0%, 100% {
+                box-shadow: 0 8px 25px rgba(255, 107, 157, 0.4);
+            }
+            50% {
+                box-shadow: 0 8px 25px rgba(255, 107, 157, 0.7), 0 0 20px rgba(255, 107, 157, 0.5);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="heart-bg" id="heartBg"></div>
+
+    <!-- Reproductor de Música -->
+    <div class="music-player">
+        <button id="musicToggle" class="music-btn" onclick="toggleMusic()">
+            🎵 Play
+        </button>
+        <audio id="bgMusic" loop>
+            <source src="/cancion.mp3" type="audio/mpeg">
+        </audio>
+    </div>
+
+    <!-- Pantalla de Inicio -->
+    <div id="screen-inicio" class="screen active">
+        <h1>Para Leydi</h1>
+        <div class="heart-icon">❤️</div>
+        <p class="subtitle">Una aventura especial creada solo para ti</p>
+        <button class="option-btn start-btn" onclick="showScreen('screen-valentin')">Comenzar ✨</button>
+    </div>
+
+    <!-- Pregunta San Valentín (Obligatoria) -->
+    <div id="screen-valentin" class="screen">
+        <h2>Leydi, ¿Quieres ser mi San Valentín? 💕</h2>
+        <div class="question-icon">🌹</div>
+        <div class="options">
+            <button class="option-btn" onclick="showScreen('screen-pregunta1')">¡Sí, claro que sí! ❤️</button>
+            <button class="option-btn" onclick="showScreen('screen-pregunta1')">¡Por supuesto, mi amor! 💖</button>
+        </div>
+    </div>
+
+    <!-- Pregunta 1 -->
+    <div id="screen-pregunta1" class="screen">
+        <div class="question-number">Pregunta 1 de 4</div>
+        <h2 class="question-text">¿Qué es lo que más valoras de nuestra relación? 💕</h2>
+        <div class="options">
+            <button class="option-btn" onclick="showScreen('screen-pregunta2')">La forma en que me haces sentir especial cada día ✨</button>
+            <button class="option-btn" onclick="showScreen('screen-pregunta2')">Todos los momentos que hemos vivido juntos 📸</button>
+        </div>
+    </div>
+
+    <!-- Pregunta 2 -->
+    <div id="screen-pregunta2" class="screen">
+        <div class="question-number">Pregunta 2 de 4</div>
+        <h2 class="question-text">Si pudieras describir nuestro amor en una palabra, ¿cuál sería? 🌹</h2>
+        <div class="options">
+            <button class="option-btn" onclick="showScreen('screen-pregunta3')">Infinito ♾️</button>
+            <button class="option-btn" onclick="showScreen('screen-pregunta3')">Inolvidable 🌟</button>
+        </div>
+    </div>
+
+    <!-- Pregunta 3 -->
+    <div id="screen-pregunta3" class="screen">
+        <div class="question-number">Pregunta 3 de 4</div>
+        <h2 class="question-text">¿Qué te hace sonreír cada vez que lo piensas?</h2>
+        <div class="options">
+            <button class="option-btn" onclick="showScreen('screen-pregunta4')">Las palabras bonitas que me dices 💌</button>
+            <button class="option-btn" onclick="showScreen('screen-pregunta4')">Los recuerdos tan hermosos que tenemos juntos 📷</button>
+        </div>
+    </div>
+
+    <!-- Pregunta 4 (Decide el final) -->
+    <div id="screen-pregunta4" class="screen">
+        <div class="question-number">Pregunta 4 de 4</div>
+        <h2 class="question-text">Dejate llevar, por el sonido de tu corazon 💝</h2>
+        <div class="options">
+            <button class="option-btn" onclick="showScreen('screen-carta')">Sorpresa 1❤️</button>
+            <button class="option-btn" onclick="showScreen('screen-album')">Sorpresa 2❤️</button>
+        </div>
+    </div>
+
+    <!-- Final: Carta -->
+    <div id="screen-carta" class="screen">
+        <div class="letter-container">
+            <div class="top-hearts">
+                <span>💕</span>
+                <span>❤️</span>
+                <span>💕</span>
+            </div>
+
+            <h1 class="letter-header">Para ti, que eres mi todo, Leydi Ivanna</h1>
+            <p class="letter-date">San Valentín 2026</p>
+
+            <div class="letter-content">
+                <p>
+                    Mi amor, cada día a tu lado es un regalo que atesoro en mi corazón. Desde el primer momento en que te conocí, supe que eras especial, pero nunca imaginé que llegarías a ser todo mi mundo.
+                </p>
+                
+                <p>
+                    Eres la razón por la que sonrío cada mañana, la luz que ilumina mis días más oscuros y la paz que encuentro en medio del caos. Tu risa es mi melodía favorita y tus abrazos, mi lugar seguro.
+                </p>
+                
+                <p>
+                    Contigo he aprendido lo que significa amar de verdad, sin miedos ni condiciones. Has llenado mi vida de colores que nunca imaginé existirían. Cada momento a tu lado, desde los más simples hasta los más extraordinarios, se convierte en un recuerdo que guardo con cariño.
+                </p>
+                
+                <p>
+                    Gracias por ser mi compañera, mi confidente, mi mejor amiga y mi gran amor. Gracias por elegirme cada día y por permitirme ser parte de tu vida. No hay palabras suficientes para expresar todo lo que significas para mí.
+                </p>
+                
+                <p>
+                    Prometo amarte con la misma intensidad con la que late mi corazón, cuidarte como el tesoro más preciado que eres, y construir junto a ti todos los sueños que guardamos. Porque contigo, mi amor, hasta lo imposible se vuelve realidad.
+                </p>
+            </div>
+
+            <div class="letter-signature">
+                Con todo mi amor,<br>
+                El amor de tu vida ❤️
+            </div>
+
+            <p class="letter-ps">
+                P.D: Te amo hoy, te amaré mañana y te amaré por siempre. Eres y serás siempre mi San Valentín. 💕
+            </p>
+
+            <div class="bottom-hearts">
+                <span>💗</span>
+                <span>💖</span>
+                <span>💗</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Final: Álbum -->
+    <div id="screen-album" class="screen">
+        <div class="album-title">
+            <h1>"Amar y ser amados es ver el sol desde ambos lados" ☀️💕</h1>
+            <p>Cada foto cuenta nuestra historia de amor</p>
+        </div>
+
+        <div class="album-grid">
+            <!-- Foto 1 -->
+            <div class="photo-frame">
+                <div class="decoration-hearts top-left">💖</div>
+                <div class="decoration-hearts top-right">💗</div>
+                <div class="photo-placeholder"><img src="/img/WhatsApp Image 2026-02-14 at 1.36.02 PM (2).jpeg" id="img1"></div>
+                <div class="photo-caption">La primera cartita que me diste</div>
+                <div class="decoration-hearts bottom-left">💝</div>
+                <div class="decoration-hearts bottom-right">💓</div>
+            </div>
+
+            <!-- Foto 2 -->
+            <div class="photo-frame">
+                <div class="decoration-hearts top-left">💕</div>
+                <div class="decoration-hearts top-right">❤️</div>
+                <div class="photo-placeholder"><img src="/img/WhatsApp Image 2026-02-14 at 1.36.02 PM (3).jpeg" id="img2"></div>
+                <div class="photo-caption">Cuando me confesaste tu amor con las palabras mas hermosas</div>
+                <div class="decoration-hearts bottom-left">💗</div>
+                <div class="decoration-hearts bottom-right">💖</div>
+            </div>
+
+            <!-- Foto 3 -->
+            <div class="photo-frame">
+                <div class="decoration-hearts top-left">💓</div>
+                <div class="decoration-hearts top-right">💝</div>
+                <div class="photo-placeholder"><img src="/img/WhatsApp Image 2026-02-14 at 1.36.02 PM (4).jpeg" id="img3"></div>
+                <div class="photo-caption">Tu y yo de pequeños jsjsjsjs</div>
+                <div class="decoration-hearts bottom-left">❤️</div>
+                <div class="decoration-hearts bottom-right">💕</div>
+            </div>
+
+            <!-- Foto 4 -->
+            <div class="photo-frame">
+                <div class="decoration-hearts top-left">💖</div>
+                <div class="decoration-hearts top-right">💓</div>
+                <div class="photo-placeholder"><img src="/img/WhatsApp Image 2026-02-14 at 1.36.02 PM (1).jpeg" id="img4"></div>
+                <div class="photo-caption">Cuando nos casamos y prometimos amarnos por siempre</div>
+                <div class="decoration-hearts bottom-left">💝</div>
+                <div class="decoration-hearts bottom-right">💗</div>
+            </div>
+
+            <!-- Foto 5 -->
+            <div class="photo-frame">
+                <div class="decoration-hearts top-left">❤️</div>
+                <div class="decoration-hearts top-right">💕</div>
+                <div class="photo-placeholder"><img src="/img/WhatsApp Image 2026-02-14 at 1.36.02 PM (5).jpeg" id="img5"></div>
+                <div class="photo-caption">Recuerdo que perdimos como 10 veces XD</div>
+                <div class="decoration-hearts bottom-left">💖</div>
+                <div class="decoration-hearts bottom-right">💓</div>
+            </div>
+
+            <!-- Foto 6 -->
+            <div class="photo-frame">
+                <div class="decoration-hearts top-left">💗</div>
+                <div class="decoration-hearts top-right">💝</div>
+                <div class="photo-placeholder"><img src="/img/WhatsApp Image 2026-02-14 at 1.36.02 PM.jpeg" id="img6"></div>
+                <div class="photo-caption">Te veias hermosa en nuestra segunda boda</div>
+                <div class="decoration-hearts bottom-left">💕</div>
+                <div class="decoration-hearts bottom-right">❤️</div>
+            </div>
+        </div>
+
+        <div class="final-message">
+            <h2>Cada foto es un pedacito de mi corazón 💖</h2>
+            <p>
+                Estos momentos son solo el comienzo de todas las memorias que crearemos juntos. 
+                Gracias por llenar mi vida de amor, risas y felicidad. 
+                Te amo hoy, mañana y siempre, mi amor. Gracias por compartir cada uno de estos momentos que atesoro en mi corazon
+                ¡Feliz San Valentín! ❤️
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Función para cambiar entre pantallas
+        function showScreen(screenId) {
+            // Ocultar todas las pantallas
+            const screens = document.querySelectorAll('.screen');
+            screens.forEach(screen => {
+                screen.classList.remove('active');
+            });
+
+            // Mostrar la pantalla seleccionada
+            const targetScreen = document.getElementById(screenId);
+            if (targetScreen) {
+                targetScreen.classList.add('active');
+                // Scroll suave al inicio
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        // Crear corazones flotantes en el fondo
+        const heartBg = document.getElementById('heartBg');
+        const hearts = ['❤️', '💕', '💖', '💗', '💝', '💓'];
+        
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'floating-heart';
+            heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.animationDelay = Math.random() * 5 + 's';
+            heart.style.animationDuration = (Math.random() * 10 + 10) + 's';
+            heartBg.appendChild(heart);
+            
+            setTimeout(() => heart.remove(), 25000);
+        }
+        
+        // Crear corazones continuamente
+        setInterval(createHeart, 800);
+        
+        // Crear corazones iniciales
+        for(let i = 0; i < 15; i++) {
+            setTimeout(createHeart, i * 400);
+        }
+
+        // Control de música
+        let isPlaying = false;
+        const music = document.getElementById('bgMusic');
+        const musicBtn = document.getElementById('musicToggle');
+
+        function toggleMusic() {
+            if (isPlaying) {
+                music.pause();
+                musicBtn.textContent = '🎵 Play';
+                musicBtn.classList.remove('playing');
+                isPlaying = false;
+            } else {
+                music.play();
+                musicBtn.textContent = '🎵 Pause';
+                musicBtn.classList.add('playing');
+                isPlaying = true;
+            }
+        }
+
+        // Intentar reproducir automáticamente (puede no funcionar en algunos navegadores)
+        window.addEventListener('load', () => {
+            music.volume = 0.3; // Volumen al 30%
+            // Si quieres que empiece automáticamente, descomenta la siguiente línea:
+            toggleMusic();
+        });
+    </script>
+</body>
+</html>
